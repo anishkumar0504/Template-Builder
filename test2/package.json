@@ -1,0 +1,22 @@
+{
+  "name": "projectx-template-builder",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js",
+    "analyze": "node src/cli.js analyze",
+    "generate": "node src/cli.js generate",
+    "check": "node --check src/server.js && node --check src/pipeline.js && node --check src/renderer.js"
+  },
+  "dependencies": {
+    "@google/genai": "^1.11.0",
+    "cors": "^2.8.5",
+    "docx": "^9.5.1",
+    "dotenv": "^16.6.1",
+    "express": "^5.1.0",
+    "jszip": "^3.10.2",
+    "multer": "^2.0.2",
+    "zod": "^4.0.5"
+  }
+}

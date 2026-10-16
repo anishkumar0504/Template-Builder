@@ -1,0 +1,13 @@
+{
+  "title": "Experiment 01: Introduction to Cloud Computing",
+  "experiment_no": "01",
+  "student_name": "Student Name",
+  "prn": "PRN000000",
+  "date": "16 October 2026",
+  "aim": "To understand the basic concepts of cloud computing.",
+  "theory": "Cloud computing provides on-demand access to computing resources over a network.",
+  "requirements": ["Laptop", "Internet connection"],
+  "procedure": ["Open the cloud console.", "Create the required resource.", "Verify the configuration."],
+  "output": "Describe the expected output or attach a screenshot reference.",
+  "result": "The practical was completed successfully."
+}

@@ -1,0 +1,54 @@
+{
+  "practical_title": "Configure an Application Load Balancer (ALB) with Multiple EC2 Instances",
+  "student_name": "ANISH KUMAR",
+  "prn": "20240802503",
+  "faculty_name": "Dr. Swapnil Waghmare",
+  "aim": "To configure and deploy an AWS Application Load Balancer (ALB) that distributes incoming HTTP traffic across multiple EC2 web server instances, thereby ensuring high availability, fault tolerance, and horizontal scalability of the hosted web application.",
+  "objectives": [
+    "To understand the concept of load balancing and its role in distributed cloud architectures.",
+    "To launch and configure multiple EC2 instances acting as independent web servers.",
+    "To create and configure security groups for EC2 instances and the load balancer.",
+    "To create a target group and register EC2 instances as targets.",
+    "To create and configure an Application Load Balancer with an HTTP listener.",
+    "To verify that traffic is being distributed evenly across all registered instances."
+  ],
+  "aws_services": [
+    "Amazon EC2 (Elastic Compute Cloud) – to host the web server instances.",
+    "Elastic Load Balancing (ELB) – Application Load Balancer (ALB).",
+    "Amazon VPC – networking, subnets and Availability Zones.",
+    "Security Groups – to control inbound/outbound traffic.",
+    "Target Groups – to group and health-check EC2 instances."
+  ],
+  "prerequisites": [
+    "An active AWS Free-tier account with console access.",
+    "A key pair (.pem) for SSH access to EC2 instances.",
+    "Basic understanding of EC2, VPC, subnets and security groups.",
+    "A web server package (Apache/Nginx) to install on the EC2 instances."
+  ],
+  "architecture_diagram": "assets/page-2-image-1.png",
+  "procedure": [
+    "Navigate to the EC2 Dashboard and click Launch Instances. Name the instance (503 Anish). Choose Amazon Linux 2 or Ubuntu AMI, select t2.micro, and configure Network settings in Availability Zone A.",
+    "Repeat to launch WebServer-2 and WebServer-3 with the same AMI, instance type, and security group. Install the web server and edit the index page on each to identify it.",
+    "Go to EC2 → Security Groups. Edit Inbound Rules: Add SSH (Port 22, Source: My IP) and HTTP (Port 80, Source: 0.0.0.0/0).",
+    "Create ALB Security Group: Add Inbound Rule: HTTP, Port 80, Source: 0.0.0.0/0.",
+    "Go to EC2 → Target Groups → Create target group. Target type: Instances, Protocol: HTTP, Port: 80. Configure health check path (/).",
+    "On the 'Register targets' screen, select all three web server instances and click 'Create target group'.",
+    "Go to Target Groups → Targets tab. Wait for the status column to show 'healthy' for all instances.",
+    "Go to EC2 → Load Balancers → Create Load Balancer → Application Load Balancer. Name it (e.g., 503Anish), Scheme: Internet-facing.",
+    "Select the VPC used by your EC2 instances. Select at least two Availability Zones and their corresponding public subnets.",
+    "Under 'Security groups', remove the default and attach the ALB-SG created earlier.",
+    "Under 'Listeners and routing', keep Protocol= HTTP, Port= 80. Set 'Default action' to forward to the target group. Click 'Create load balancer'.",
+    "Select your ALB and check the 'State' column. Wait until it changes from 'Provisioning' to 'Active'.",
+    "Go to the 'Description' tab and copy the value under 'DNS name'.",
+    "Paste the copied DNS name into a web browser. Confirm the page loads and displays content from one of the web server instances.",
+    "Refresh the browser multiple times and observe the instance identifier changing, confirming round-robin load balancing."
+  ],
+  "verification": [
+    "Confirmed both EC2 instances show a 'healthy' status within the target group.",
+    "Confirmed the Application Load Balancer state is 'Active'.",
+    "Accessed the application using the ALB DNS name and verified the web page loads correctly.",
+    "Refreshed the ALB DNS multiple times and verified responses alternate between EC2 instances."
+  ],
+  "expected_output": "On accessing the Application Load Balancer's DNS name in a browser, the web page should load successfully, and repeated requests should be distributed across both EC2 web server instances, each returning its own identifying response.",
+  "conclusion": "An Application Load Balancer was successfully created and configured to distribute HTTP traffic across multiple EC2 web server instances. The target group health checks confirmed both instances were reachable, and testing via the ALB DNS name verified that requests were load-balanced correctly. This demonstrates how AWS Elastic Load Balancing improves availability, fault tolerance, and scalability."
+}
